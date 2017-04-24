@@ -20,6 +20,13 @@ public interface OrderGateway {
   List<Order> findAll(LocalDate date);
 
   /**
+   * List the latest orders
+   *
+   * @return list of orders
+   */
+  List<Order> findLatestOrders();
+
+  /**
    * List all orders by source
    *
    * @param source the worker

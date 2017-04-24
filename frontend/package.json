@@ -16,10 +16,11 @@
   "author": "Diego Rubin",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.15.3",
     "body-parser": "^1.12.3",
     "express": "^4.12.3",
-    "pug": "^2.0.0-beta6",
-    "axios": "^0.15.3"
+    "express-ws": "^3.0.0",
+    "pug": "^2.0.0-beta6"
   },
   "devDependencies": {
     "jasmine": "^2.5.2",

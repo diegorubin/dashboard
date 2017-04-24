@@ -1,5 +1,6 @@
 const express = require('express'), 
   app = express(), 
+  expressWs = require('express-ws')(app),
   config = require('./config/application').server,
   bodyParser = require('body-parser'), 
   port = config.port;

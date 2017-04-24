@@ -21,6 +21,7 @@ class RabbitMQConsumer():
 
     def handle_delivery(self, channel, method, header, body):
         self.options['on_receive'](body)
+        self.channel.basic_ack(method.delivery_tag)
 
     def start(self):
         self.connection.ioloop.start()

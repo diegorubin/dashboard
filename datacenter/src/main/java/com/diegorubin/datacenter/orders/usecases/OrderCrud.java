@@ -1,5 +1,7 @@
 package com.diegorubin.datacenter.orders.usecases;
 
+import com.diegorubin.datacenter.notifications.domain.Notification;
+import com.diegorubin.datacenter.notifications.gateways.NotifyClient;
 import com.diegorubin.datacenter.orders.domain.Order;
 import com.diegorubin.datacenter.orders.gateways.OrderGateway;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class OrderCrud {
     @Autowired
     private OrderGateway orderGateway;
 
+    @Autowired
+    private NotifyClient notifyClient;
+
     public List<Order> findAll(String source, LocalDate date) {
         List<Order> orders;
         if (Optional.ofNullable(source).isPresent()) {
@@ -38,7 +43,21 @@ public class OrderCrud {
     public Order create(Order order) {
         order.setReceivedIn(LocalDateTime.now());
         LOGGER.info("creating order code=" + order.getOrderCode());
-        return orderGateway.create(order);
+        Order created = orderGateway.create(order);
+        try {
+            notifyClient.notify(getNotification());
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return created;
+    }
+
+    private Notification getNotification() {
+        Notification notification = new Notification();
+        notification.setChart("orders");
+        notification.setPoint("last");
+        notification.setValue(orderGateway.countLatestHourOrders());
+        return notification;
     }
 
 }

@@ -1,6 +1,14 @@
 server:
   port: 8080
 
+ribbon:
+  eureka:
+    enabled: false
+
+notify:
+  ribbon:
+    listOfServers: http://localhost:5000
+
 spring:
   application:
     name: datacenter

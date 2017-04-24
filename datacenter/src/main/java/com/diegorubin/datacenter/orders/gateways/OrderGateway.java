@@ -44,4 +44,6 @@ public interface OrderGateway {
    */
   Order create(Order order);
 
+  Long countLatestHourOrders();
+
 }

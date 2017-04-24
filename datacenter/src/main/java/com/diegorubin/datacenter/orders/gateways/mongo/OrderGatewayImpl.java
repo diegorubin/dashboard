@@ -45,4 +45,10 @@ public class OrderGatewayImpl implements OrderGateway {
         return orderRepository.save(order);
     }
 
+    @Override
+    public Long countLatestHourOrders() {
+        LocalDateTime begin = LocalDateTime.now().withMinute(0);
+        return (long) orderRepository.findByDate(begin, begin.plusHours(1)).size();
+    }
+
 }
